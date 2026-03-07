@@ -9,7 +9,7 @@ export function Header() {
 
   const navLinks = [
     { path: '/', label: 'Home' },
-    { path: '/privacy', label: 'Privacy' },
+    { path: '/policies', label: 'Policies' },
     { path: '/support', label: 'Support' },
     { path: '/contact', label: 'Contact' }
   ];

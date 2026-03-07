@@ -1,12 +1,19 @@
 import { useState } from 'react';
 import { motion } from 'motion/react';
 import { Mail, MessageCircle, Bug, Lightbulb, CreditCard, HelpCircle } from 'lucide-react';
+import { apps } from '../data/apps';
+
+const SUPPORT_EMAIL = 'support@frostedbyte.thedigimavericks.com';
+
+const appIds = new Set(apps.map((app) => app.id));
+const hashValue = typeof window !== 'undefined' ? window.location.hash.replace('#', '') : '';
+const defaultApp = appIds.has(hashValue) ? hashValue : '';
 
 export function Support() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    app: '',
+    app: defaultApp,
     subject: '',
     message: ''
   });
@@ -15,9 +22,22 @@ export function Support() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // In a real app, this would send the form data to a backend
+
+    const selectedApp = formData.app === 'general'
+      ? 'General Inquiry'
+      : apps.find((app) => app.id === formData.app)?.name || formData.app;
+
+    const body = [
+      `Name: ${formData.name}`,
+      `Email: ${formData.email}`,
+      `App: ${selectedApp || 'Not specified'}`,
+      '',
+      formData.message
+    ].join('\n');
+
+    const mailto = `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = mailto;
     setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 3000);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -37,30 +57,28 @@ export function Support() {
     {
       icon: <Lightbulb size={24} />,
       question: 'How do I request a new feature?',
-      answer: 'We love hearing your ideas! Use the contact form below to send us your feature requests. We review all suggestions and prioritize based on user demand.',
+      answer: 'We love hearing your ideas. Use the support form to send feature requests and we review them regularly.',
       gradient: 'from-purple-500 to-pink-500'
     },
     {
       icon: <Bug size={24} />,
       question: 'Found a bug?',
-      answer: 'Please report bugs using the contact form. Include your device model, OS version, and steps to reproduce the issue. Screenshots are helpful too!',
+      answer: 'Please include your device model, OS version, and steps to reproduce. Screenshots are very helpful.',
       gradient: 'from-red-500 to-orange-500'
     },
     {
       icon: <CreditCard size={24} />,
       question: 'Subscription or payment issues?',
-      answer: 'For subscription issues, check your App Store or Google Play account. Subscriptions are managed through your platform account, not directly through us.',
+      answer: 'Subscriptions are managed in Apple App Store or Google Play account settings, depending on your purchase platform.',
       gradient: 'from-green-500 to-emerald-500'
     }
   ];
 
   return (
     <div className="min-h-screen bg-gray-950 py-12">
-      {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-blue-950/20 via-gray-900 to-purple-950/20 pointer-events-none"></div>
-      
+
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -70,15 +88,12 @@ export function Support() {
             <MessageCircle className="text-blue-400" size={18} />
             <span className="text-blue-400 text-sm font-medium">Support Center</span>
           </div>
-          <h1 className="text-5xl font-bold text-white mb-4">
-            How can we help?
-          </h1>
+          <h1 className="text-5xl font-bold text-white mb-4">How can we help?</h1>
           <p className="text-xl text-gray-400">
-            Find answers to common questions or get in touch with our support team
+            Find answers to common questions or contact our support team.
           </p>
         </motion.div>
 
-        {/* FAQ Section */}
         <section className="mb-16">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
@@ -88,6 +103,7 @@ export function Support() {
           >
             Frequently Asked Questions
           </motion.h2>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
             {faqs.map((faq, index) => (
               <motion.div
@@ -104,12 +120,8 @@ export function Support() {
                     {faq.icon}
                   </div>
                   <div>
-                    <h3 className="font-semibold text-white mb-2 text-lg">
-                      {faq.question}
-                    </h3>
-                    <p className="text-sm text-gray-400 leading-relaxed">
-                      {faq.answer}
-                    </p>
+                    <h3 className="font-semibold text-white mb-2 text-lg">{faq.question}</h3>
+                    <p className="text-sm text-gray-400 leading-relaxed">{faq.answer}</p>
                   </div>
                 </div>
               </motion.div>
@@ -117,7 +129,6 @@ export function Support() {
           </div>
         </section>
 
-        {/* Contact Form Section */}
         <motion.section
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -130,12 +141,8 @@ export function Support() {
                 <MessageCircle className="text-white" size={24} />
               </div>
               <div>
-                <h2 className="text-2xl font-semibold text-white">
-                  Contact Support
-                </h2>
-                <p className="text-sm text-gray-400">
-                  We'll get back to you as soon as possible
-                </p>
+                <h2 className="text-2xl font-semibold text-white">Contact Support</h2>
+                <p className="text-sm text-gray-400">Opens your default email app with prefilled details.</p>
               </div>
             </div>
 
@@ -145,16 +152,14 @@ export function Support() {
                 animate={{ opacity: 1, scale: 1 }}
                 className="mb-6 p-4 bg-green-500/10 border border-green-500/20 rounded-xl text-green-400 text-sm"
               >
-                Thank you! Your message has been sent. We'll respond within 24-48 hours.
+                Draft created. If your email app did not open, send your request directly to {SUPPORT_EMAIL}.
               </motion.div>
             )}
 
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
-                    Name
-                  </label>
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">Name</label>
                   <input
                     type="text"
                     id="name"
@@ -168,9 +173,7 @@ export function Support() {
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
-                    Email
-                  </label>
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">Email</label>
                   <input
                     type="email"
                     id="email"
@@ -185,9 +188,7 @@ export function Support() {
               </div>
 
               <div>
-                <label htmlFor="app" className="block text-sm font-medium text-gray-300 mb-2">
-                  Which app?
-                </label>
+                <label htmlFor="app" className="block text-sm font-medium text-gray-300 mb-2">Which app?</label>
                 <select
                   id="app"
                   name="app"
@@ -197,17 +198,15 @@ export function Support() {
                   className="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-white transition-all"
                 >
                   <option value="">Select an app</option>
-                  <option value="task-master">TaskMaster</option>
-                  <option value="budget-buddy">BudgetBuddy</option>
-                  <option value="habit-tracker">HabitFlow</option>
+                  {apps.map((app) => (
+                    <option key={app.id} value={app.id}>{app.name}</option>
+                  ))}
                   <option value="general">General Inquiry</option>
                 </select>
               </div>
 
               <div>
-                <label htmlFor="subject" className="block text-sm font-medium text-gray-300 mb-2">
-                  Subject
-                </label>
+                <label htmlFor="subject" className="block text-sm font-medium text-gray-300 mb-2">Subject</label>
                 <input
                   type="text"
                   id="subject"
@@ -221,9 +220,7 @@ export function Support() {
               </div>
 
               <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
-                  Message
-                </label>
+                <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">Message</label>
                 <textarea
                   id="message"
                   name="message"
@@ -242,7 +239,7 @@ export function Support() {
                 type="submit"
                 className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-4 px-6 rounded-xl hover:shadow-lg hover:shadow-blue-500/50 transition-all font-medium"
               >
-                Send Message
+                Send via Email App
               </motion.button>
             </form>
 
@@ -252,10 +249,10 @@ export function Support() {
                 <span className="text-sm">
                   Or email us directly at{' '}
                   <a
-                    href="mailto:support@frostedbyte.thedigimavericks.com"
+                    href={`mailto:${SUPPORT_EMAIL}`}
                     className="text-blue-400 hover:text-blue-300 font-medium"
                   >
-                    support@frostedbyte.thedigimavericks.com
+                    {SUPPORT_EMAIL}
                   </a>
                 </span>
               </div>

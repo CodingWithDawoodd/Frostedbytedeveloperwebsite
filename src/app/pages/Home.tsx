@@ -2,6 +2,7 @@ import { AppCard } from '../components/AppCard';
 import { apps } from '../data/apps';
 import { Smartphone, Zap, Shield, Code, Sparkles } from 'lucide-react';
 import { motion } from 'motion/react';
+import { Link } from 'react-router';
 
 export function Home() {
   return (
@@ -88,14 +89,18 @@ export function Home() {
               >
                 Explore Apps
               </motion.a>
-              <motion.a
+              <motion.div
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                href="/contact"
-                className="px-8 py-4 bg-gray-800 text-white rounded-xl font-medium border border-gray-700 hover:bg-gray-700 transition-all"
+                className="inline-flex"
               >
-                Get in Touch
-              </motion.a>
+                <Link
+                  to="/contact"
+                  className="px-8 py-4 bg-gray-800 text-white rounded-xl font-medium border border-gray-700 hover:bg-gray-700 transition-all"
+                >
+                  Get in Touch
+                </Link>
+              </motion.div>
             </motion.div>
           </div>
         </div>
