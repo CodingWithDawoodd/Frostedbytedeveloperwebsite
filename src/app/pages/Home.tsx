@@ -1,29 +1,24 @@
 import { AppCard } from '../components/AppCard';
 import { apps } from '../data/apps';
-import { Smartphone, Zap, Shield, Code, Sparkles } from 'lucide-react';
+import { Smartphone, Zap, Shield, Code, Sparkles, Wallet, BadgeCheck } from 'lucide-react';
 import { motion } from 'motion/react';
 import { Link } from 'react-router';
 
 export function Home() {
+  const currentApp = apps[0];
+
   return (
     <div className="bg-gray-950">
-      {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        {/* Animated Background */}
         <div className="absolute inset-0 bg-gradient-to-br from-blue-950 via-gray-900 to-purple-950">
           <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjAzKSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')] opacity-20"></div>
-          
-          {/* Gradient Orbs */}
+
           <motion.div
             animate={{
               scale: [1, 1.2, 1],
               opacity: [0.3, 0.5, 0.3],
             }}
-            transition={{
-              duration: 8,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
+            transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
             className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500 rounded-full filter blur-3xl opacity-30"
           />
           <motion.div
@@ -31,28 +26,22 @@ export function Home() {
               scale: [1, 1.3, 1],
               opacity: [0.2, 0.4, 0.2],
             }}
-            transition={{
-              duration: 10,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 1
-            }}
+            transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
             className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500 rounded-full filter blur-3xl opacity-20"
           />
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="text-center max-w-4xl mx-auto">
-            {/* Logo */}
             <motion.div
               initial={{ scale: 0, rotate: -180 }}
               animate={{ scale: 1, rotate: 0 }}
-              transition={{ duration: 0.8, type: "spring" }}
+              transition={{ duration: 0.8, type: 'spring' }}
               className="w-24 h-24 bg-gradient-to-br from-blue-500 to-purple-600 rounded-3xl flex items-center justify-center text-white font-bold text-3xl mx-auto mb-8 shadow-2xl shadow-blue-500/50"
             >
               FB
             </motion.div>
-            
+
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -65,14 +54,14 @@ export function Home() {
                 </span>
               </h1>
             </motion.div>
-            
+
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
               className="text-xl text-gray-400 mb-12"
             >
-              Mobile apps designed to simplify everyday life.
+              FrostedByte is currently shipping Budget and Financial Tracker for everyday money management.
             </motion.p>
 
             <motion.div
@@ -87,25 +76,20 @@ export function Home() {
                 href="#apps"
                 className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-medium hover:shadow-lg hover:shadow-blue-500/50 transition-all"
               >
-                Explore Apps
+                View Current App
               </motion.a>
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="inline-flex"
-              >
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="inline-flex">
                 <Link
-                  to="/contact"
+                  to="/support#budget-financial-tracker"
                   className="px-8 py-4 bg-gray-800 text-white rounded-xl font-medium border border-gray-700 hover:bg-gray-700 transition-all"
                 >
-                  Get in Touch
+                  App Support
                 </Link>
               </motion.div>
             </motion.div>
           </div>
         </div>
 
-        {/* Scroll Indicator */}
         <motion.div
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
@@ -121,7 +105,49 @@ export function Home() {
         </motion.div>
       </section>
 
-      {/* About Section */}
+      <section className="py-16 bg-gray-900 relative">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="bg-gray-800/50 backdrop-blur-sm rounded-2xl border border-gray-700 p-8"
+          >
+            <div className="inline-flex items-center space-x-2 px-4 py-2 bg-emerald-500/10 border border-emerald-500/20 rounded-full mb-5">
+              <BadgeCheck className="text-emerald-400" size={18} />
+              <span className="text-emerald-400 text-sm font-medium">Current Project</span>
+            </div>
+
+            <div className="flex items-start gap-4 mb-4">
+              <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 to-cyan-500 rounded-xl flex items-center justify-center text-white">
+                <Wallet size={24} />
+              </div>
+              <div>
+                <h2 className="text-3xl font-bold text-white">Budget and Financial Tracker</h2>
+                <p className="text-gray-400 mt-2">
+                  Built to help users track spending, monitor budgets, and make smarter money decisions.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex flex-wrap gap-3 mt-6">
+              <Link
+                to="/privacy/budget-financial-tracker"
+                className="px-4 py-2 rounded-lg bg-blue-600/20 border border-blue-500/30 text-blue-300 hover:bg-blue-600/30 transition-colors"
+              >
+                Privacy Policy URL
+              </Link>
+              <Link
+                to="/support#budget-financial-tracker"
+                className="px-4 py-2 rounded-lg bg-purple-600/20 border border-purple-500/30 text-purple-300 hover:bg-purple-600/30 transition-colors"
+              >
+                App Support URL
+              </Link>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       <section className="py-24 bg-gray-900 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -134,17 +160,12 @@ export function Home() {
               <Code className="text-blue-400" size={18} />
               <span className="text-blue-400 text-sm font-medium">About FrostedByte</span>
             </div>
-            <h2 className="text-4xl font-bold text-white mb-6">
-              Building the Future, One App at a Time
-            </h2>
+            <h2 className="text-4xl font-bold text-white mb-6">Building the Future, One App at a Time</h2>
             <p className="text-lg text-gray-400">
-              We're an independent mobile app developer focused on creating productivity 
-              and utility apps that make your daily tasks easier. Our mission is to build 
-              simple, intuitive tools that anyone can use.
+              We are an independent app studio focused on clean, practical products with privacy-first defaults.
             </p>
           </motion.div>
 
-          {/* Features */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             {[
               {
@@ -162,7 +183,7 @@ export function Home() {
               {
                 icon: <Shield size={28} />,
                 title: 'Privacy Focused',
-                description: 'Your data stays on your device',
+                description: 'We minimize data collection and provide clear support channels',
                 gradient: 'from-green-500 to-emerald-500'
               }
             ].map((feature, index) => (
@@ -179,12 +200,8 @@ export function Home() {
                   <div className={`w-14 h-14 bg-gradient-to-br ${feature.gradient} rounded-xl flex items-center justify-center text-white mb-6 shadow-lg group-hover:scale-110 transition-transform`}>
                     {feature.icon}
                   </div>
-                  <h3 className="font-semibold text-white text-xl mb-3">
-                    {feature.title}
-                  </h3>
-                  <p className="text-gray-400">
-                    {feature.description}
-                  </p>
+                  <h3 className="font-semibold text-white text-xl mb-3">{feature.title}</h3>
+                  <p className="text-gray-400">{feature.description}</p>
                 </div>
               </motion.div>
             ))}
@@ -192,11 +209,9 @@ export function Home() {
         </div>
       </section>
 
-      {/* Apps Section */}
       <section id="apps" className="py-24 bg-gray-950 relative">
-        {/* Background Effect */}
         <div className="absolute inset-0 bg-gradient-to-b from-gray-900 via-gray-950 to-gray-900 opacity-50"></div>
-        
+
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -206,13 +221,11 @@ export function Home() {
           >
             <div className="inline-flex items-center space-x-2 px-4 py-2 bg-purple-500/10 border border-purple-500/20 rounded-full mb-6">
               <Sparkles className="text-purple-400" size={18} />
-              <span className="text-purple-400 text-sm font-medium">Our Portfolio</span>
+              <span className="text-purple-400 text-sm font-medium">Live Pipeline</span>
             </div>
-            <h2 className="text-4xl font-bold text-white mb-6">
-              Discover Our Apps
-            </h2>
+            <h2 className="text-4xl font-bold text-white mb-6">Current Launch App</h2>
             <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-              Discover the tools we've built to help you be more productive
+              Budget and Financial Tracker is the current app in release preparation.
             </p>
           </motion.div>
 

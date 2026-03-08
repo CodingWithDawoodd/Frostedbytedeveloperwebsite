@@ -11,32 +11,13 @@ export interface App {
 
 export const apps: App[] = [
   {
-    id: 'task-master',
-    name: 'TaskMaster',
-    description: 'Simple task management with smart reminders and productivity tracking.',
-    icon: '📝',
-    appStoreUrl: 'https://apps.apple.com/',
-    playStoreUrl: 'https://play.google.com/',
-    privacyPolicyUrl: '/privacy/task-master',
-    supportUrl: '/support#task-master'
-  },
-  {
-    id: 'budget-buddy',
-    name: 'BudgetBuddy',
-    description: 'Track expenses and manage your budget with ease.',
+    id: 'budget-financial-tracker',
+    name: 'Budget and Financial Tracker',
+    description: 'Track expenses, monitor cash flow, and stay on top of monthly budgets with a simple dashboard.',
     icon: '💰',
     appStoreUrl: 'https://apps.apple.com/',
     playStoreUrl: 'https://play.google.com/',
-    privacyPolicyUrl: '/privacy/budget-buddy',
-    supportUrl: '/support#budget-buddy'
-  },
-  {
-    id: 'habit-tracker',
-    name: 'HabitFlow',
-    description: 'Build better habits with daily tracking and motivational insights.',
-    icon: '🎯',
-    appStoreUrl: 'https://apps.apple.com/',
-    privacyPolicyUrl: '/privacy/habit-tracker',
-    supportUrl: '/support#habit-tracker'
+    privacyPolicyUrl: '/privacy/budget-financial-tracker',
+    supportUrl: '/support#budget-financial-tracker'
   }
 ];
